@@ -3,23 +3,19 @@
     "version": "0.0.0",
     "description": "Dynamic Web Server using Node JS",
     "author": {
-        "name": "",
-        "email": ""
+        "name": "Ryan Thompson",
+        "email": "thom0505@stthomas.edu"
     },
     "contributors": [
         {
-            "name": "",
-            "email": ""
-        },
-        {
-            "name": "",
-            "email": ""
+            "name": "Marcus Haldane",
+            "email": "hald8506@stthomas.edu"
         }
     ],
     "main": "server.js",
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/RWThompson7/Project2-DynamicServer"
     },
     "dependencies": {
         "express": "^4.18.2",

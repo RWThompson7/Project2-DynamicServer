@@ -1,0 +1,144 @@
+/* GENERAL */
+html {
+    font-size: 16px;
+}
+head {
+    background-color: whitesmoke;
+}
+body {
+    background-color: whitesmoke;
+}
+a {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+}
+h1 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+h2 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+h3 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+h4 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+h5 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+h6 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+a:hover, a:visited {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+}
+p {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+}
+p a{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+}
+li {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: normal;
+}
+.grid-container {
+    background-size: cover;
+    background-color: whitesmoke;
+    border-style: groove;
+    border-color: #232323;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  img {
+border-style: groove;
+    border-color: #232323;
+  }
+/* For the photo row on the fun page */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0.25rem;
+}
+/* Create two equal columns that sits next to each other */
+.column {
+  flex: 50%;
+  padding: 0 0.25rem;
+}
+.column img {
+  margin-top: 0.5rem;
+  vertical-align: middle;
+}
+/* NAV */
+.button {
+    background-color: #232323;
+}
+.button:hover, .button:focus {
+    background-color: #b5a642;
+}
+.off-canvas {
+    background-color: #232323;
+    border-style: groove;
+    border-color: #232323;
+}
+.off-canvas-content {
+    background-size: cover;
+}
+.top-bar {
+    background-size: cover;
+    height: 110%;
+    border-style: groove;
+    border-color: #232323;
+}
+/* HERO */
+/* Makes the image scale with the superimposed text */
+.hero-section {
+    background: url("2022-05-25 17.41.20.jpg") 50% no-repeat;
+    background-size: cover;
+    height: 96vh;
+    text-align: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+}
+.hero-section .hero-section-text{
+    color: #fefefe;
+    text-shadow: .0625rem .0625rem .125rem;
+}
+

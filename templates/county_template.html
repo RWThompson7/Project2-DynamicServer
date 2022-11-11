@@ -47,6 +47,27 @@
                     <div class="grid-x grid-padding-x">
                         <button type="button" class="cell large-auto button" data-toggle="offCanvas">Open Menu</button>
                     </div>
+                    <!-- New Content Here-->
+                    <div id="content", class = "grid-x grid-paddingx-x">
+                        <div class="cell small-8 large-4">
+                            <img id="county_map" src="%%COUNTY_IMAGE" alt="%%COUNTY_ALT_TEXT%%"/>
+                            <h1 id="county_name">%%COUNTY%%</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="county_data">County</th>
+                                        <th>Fips Code</th>
+                                        <th>Year</th>
+                                        <th>Temperature (F)</th>
+                                        <th>Temperature (C)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    %%COUNTY_INFO%%
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

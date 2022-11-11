@@ -9,7 +9,7 @@ let sqlite3 = require('sqlite3');
 
 let public_dir = path.join(__dirname, 'public');
 let template_dir = path.join(__dirname, 'templates');
-let db_filename = path.join(__dirname, 'db', 'YOUR_DATABASE_FILE.sqlite3'); // <-- change this
+let db_filename = path.join(__dirname, 'db', 'climate.sqlite3'); // <-- change this
 
 let app = express();
 let port = 8000;
@@ -30,7 +30,7 @@ app.use(express.static(public_dir));
 
 // GET request handler for home page '/' (redirect to desired route)
 app.get('/', (req, res) => {
-    let home = ''; // <-- change this
+    let home = '/National/'; // <-- change this
     res.redirect(home);
 });
 
@@ -46,6 +46,23 @@ app.get('/year/:selected_year', (req, res) => {
     });
 });
 */
+
+app.get('/National/farrenheit', (req, res) => {
+    console.log(req.queery);
+    fs.readFile(path.join(template_dir, 'national_template.html'), (err, template) => {
+    let query = 'SELECT '
+
+db.all(query, [], (err, rows) => {
+    console.log(err);
+    console.log(rows);
+    let response = template.toString();
+    response = response.replace('%%COUNTY%%', rows[0]);
+    response = response.replace('%%COUNTY_ALT_TEXT%%', rows[0]);
+    response = response.replace('%%COUNTY%%', rows[0]);
+
+        });
+    });
+});
 
 app.listen(port, () => {
     console.log('Now listening on port ' + port);

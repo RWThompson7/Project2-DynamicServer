@@ -30,7 +30,7 @@ app.use(express.static(public_dir));
 
 // GET request handler for home page '/' (redirect to desired route)
 app.get('/', (req, res) => {
-    let home = '/National/'; // <-- change this
+    let home = '/county/'; // <-- change this
     res.redirect(home);
 });
 
@@ -46,23 +46,42 @@ app.get('/year/:selected_year', (req, res) => {
     });
 });
 */
-
-app.get('/National/farrenheit', (req, res) => {
-    console.log(req.queery);
-    fs.readFile(path.join(template_dir, 'national_template.html'), (err, template) => {
-    let query = 'SELECT '
-
-db.all(query, [], (err, rows) => {
-    console.log(err);
-    console.log(rows);
-    let response = template.toString();
-    response = response.replace('%%COUNTY%%', rows[0]);
-    response = response.replace('%%COUNTY_ALT_TEXT%%', rows[0]);
-    response = response.replace('%%COUNTY%%', rows[0]);
-
+/* Get the national temperature information in either C or F*/
+app.get('/county/:temp', (req, res) => {
+    let temp = parseFloat(req.params.temp);
+    fs.readFile(path.join(template_dir, 'county_template.html'), (err, template) => {
+        let query = 'SELECT county.fips, county.year, county.temp, county.tempc FROM county WHERE county.temp > ?';
+        console.log(req.query);
+        db.all(query, [temp], (err, rows) => {
+            console.log(err);
+            console.log(rows);
+            console.log(temp);
+            let response = template.toString();
+            //response = response.replace('%%COUNTY%%', (rows[0].fips));
+            //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
+            //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+            let county_data = '';
+            let i;
+            for (i = 0; i < rows.length; i++) {
+                county_data = county_data + '<tr>';
+                county_data = county_data + '<td>' + rows[i].fips + '</td>';
+                county_data = county_data + '<td>' + rows[i].year + '</td>';
+                county_data = county_data + '<td>' + rows[i].temp + '</td>';
+                county_data = county_data + '</tr>';
+            }
+            response = response.replace('%%COUNTY_INFO%%', county_data);
+            res.status(200).type('html').send(response);
         });
     });
 });
+
+
+
+
+
+
+
+
 
 app.listen(port, () => {
     console.log('Now listening on port ' + port);

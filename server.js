@@ -54,8 +54,6 @@ app.get('/county/:temp', (req, res) => {
         console.log(req.query);
         db.all(query, [temp], (err, rows) => {
             console.log(err);
-            console.log(rows);
-            console.log(temp);
             let response = template.toString();
             //response = response.replace('%%COUNTY%%', (rows[0].fips));
             //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');

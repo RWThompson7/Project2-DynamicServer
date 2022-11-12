@@ -75,6 +75,14 @@ app.get('/county/:temp', (req, res) => {
 
 
 
+app.get('/templates/:temp', (req, res) => {
+    let temp = req.params.temp;
+    fs.readFile(path.join(template_dir, 'testPage.html'), (err, template) => {
+        let response = template.toString();
+        res.status(200).type('html').send(response);
+    });
+});
+
 
 
 

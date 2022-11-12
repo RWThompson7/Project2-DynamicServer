@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="wideth=device-width, initial-scale=1.0">
         <title>National</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="stylesheet" href="/css/foundation.css">
     </head>
     <body>
@@ -48,7 +49,7 @@
                 </div>
                 <div id="content", class = "grid-x grid-paddingx-x">
                     <div class="cell small-8 large-4">
-                        <!-- <img id="county_map" src="%%COUNTY_IMAGE%%" alt="%%COUNTY_ALT_TEXT%%"/> -->
+                        <!-- <img id="national_map" src="%%NATIONAL_IMAGE%%" alt="%%NATIONAL_ALT_TEXT%%"/> -->
                         <h1 id="data_name">%%DATA_NAME%%</h1>
                         <table>
                             <thead>
@@ -65,11 +66,47 @@
                     </div>
                 </div>
             </div>
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+                    <div class="cell large-auto">
+                        <div>
+                            <canvas id="myChart"  width="5000" height="5000"></canvas>
+                        </div>
+
+                        <script>
+                            let mychart = document.getElementById('myChart').getContext('2d');
+
+                            let nationalChart = new Chart(myChart, {
+                                type:'bar', 
+                                data:{
+                                    labels: '%%YEARS%%',
+                                    datasets:[{
+                                        label: 'Fahrenheit',
+                                        borderColor: 'blue',
+                                        data: '%%DATA_PLACEHOLDER_F%%',
+                                        
+                                    }],
+                                },
+                                options:{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                display: true,
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- include before closing <body> tag -->
         <script src="/js/vendor.js"></script>
         <script src="/js/foundation.js"></script>
+        
         <script type="application/javascript">
             $(document).foundation();
         </script>

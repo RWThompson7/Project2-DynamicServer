@@ -47,12 +47,32 @@
                     <div class="grid-x grid-padding-x">
                         <button type="button" class="cell large-auto button" data-toggle="offCanvas">Open Menu</button>
                     </div>
+                    <div id="content", class = "grid-x grid-paddingx-x">
+                        <div class="cell small-8 large-4">
+                            <!-- <img id="county_map" src="%%COUNTY_IMAGE%%" alt="%%COUNTY_ALT_TEXT%%"/> -->
+                            <h1 id="data_name">%%DATA_NAME%%</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="national_data">Fips</th>
+                                        <th>State</th>
+                                        <th>Year</th>
+                                        <th>Temperature (Farreheit)</th>
+                                        <th>Temperature (Celsius)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    %%TABLE_INFO%%
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- include before closing <body> tag -->
-            <script src="js/vendor.js"></script>
-            <script src="js/foundation.js"></script>
+            <script src="/js/vendor.js"></script>
+            <script src="/js/foundation.js"></script>
             <script type="application/javascript">
                 $(document).foundation();
             </script>

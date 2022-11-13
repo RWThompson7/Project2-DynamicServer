@@ -73,6 +73,15 @@ li {
     background-color: whitesmoke;
     margin: auto;
 }
+.off-canvas-content {
+    margin: auto;
+}
+.off-canvas {
+    margin: auto;
+}
+.container {
+    margin: auto;
+}
 .center {
     display: block;
     margin-left: auto;
@@ -115,5 +124,6 @@ table, th, td {
     background-size: cover;
     height: 110%;
 }
+
 
 

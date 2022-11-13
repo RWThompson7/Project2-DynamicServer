@@ -45,7 +45,7 @@ app.get('/national/:year', (req, res) => {
         }
         else {
             let response = template.toString();
-            response = response.replace('%%DATA_NAME%%', 'National Temperature');
+            response = response.replace('%%DATA_NAME%%', 'Average National Temperature');
             response = response.replace('%%NATIONAL_ALT_TEXT%%', 'photo of the United States');
             response = response.replace('%%NATIONAL_IMAGE%%', '/photos/UNITED STATES.jpg');
             let national_data = '';
@@ -74,7 +74,7 @@ app.get('/state/:state', (req, res) => {
             }
             else {
                 let response = template.toString();
-                response = response.replace('%%DATA_NAME%%', 'State Temperature');
+                response = response.replace('%%DATA_NAME%%', 'Average Temperature by State');
                 response = response.replace('%%STATE_ALT_TEXT%%', 'photo of US counties');
                 response = response.replace('%%STATE_IMAGE%%', '/photos/' + rows[0].state + '.png');
                 let state_data = '';
@@ -105,7 +105,7 @@ app.get('/county/:fips', (req, res) => {
             }
             else {
                 let response = template.toString();
-                response = response.replace('%%DATA_NAME%%', rows[0].name);
+                response = response.replace('%%DATA_NAME%%', 'Average Temperature by County');
                 response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
                 response = response.replace('%%COUNTY_IMAGE%%', '/photos/UNITED STATES.jpg');
                 let county_data = '';

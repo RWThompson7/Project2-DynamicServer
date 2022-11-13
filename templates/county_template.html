@@ -18,12 +18,9 @@
     
                 <!-- Menu -->
                 <ul class="vertical menu">
-                    <li><a href="#">Test Design</a></li>
-                    <li><a href="#">Dot</a></li>
-                    <li><a href="#">ZURB</a></li>
-                    <li><a href="#">Com</a></li>
-                    <li><a href="#">Slash</a></li>
-                    <li><a href="#">Sites</a></li>
+                    <li><a href="/national/year/2019" target="_self" class = "button">National</a></li>
+                    <li><a href="/state/year/2019" target="_self" class = "button">State</a></li>
+                    <li><a href="/county/year/2019" target="_self" class = "button">County</a></li>
                 </ul>
             </div>
             <!-- Your page content lives here -->
@@ -32,26 +29,13 @@
                 <div class="grid-container">
                     <!-- `grid-x` represents a row -->
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-6 large-4" style="background-color: #ADD8E6;">Small 6 / Large 4</div>
-                        <div class="cell small-6 large-8" style="background-color: #90EE90;">Small 6 / Large 8</div>
-                    </div>
-                    
-                    <div class="grid-x grid-padding-x">
-                        <div class="cell large-auto" style="background-color: #ADD8E6;">One</div>
-                        <div class="cell large-auto" style="background-color: #90EE90;">Two</div>
-                        <div class="cell large-auto" style="background-color: #ADD8E6;">Three</div>
-                        <div class="cell large-auto" style="background-color: #90EE90;">Four</div>
-                        <div class="cell large-auto" style="background-color: #ADD8E6;">Five</div>
-                    </div>
-                    
-                    <div class="grid-x grid-padding-x">
                         <button type="button" class="cell large-auto button" data-toggle="offCanvas">Open Menu</button>
                     </div>
 
                     <!-- New Content Here-->
                     <div id="content", class = "grid-x grid-paddingx-x">
-                        <div class="cell small-8 large-4">
-                            <!-- <img id="county_map" src="%%COUNTY_IMAGE%%" alt="%%COUNTY_ALT_TEXT%%"/> -->
+                        <div class="cell small-6 large-">
+                            <img id="county_map" src="%%COUNTY_IMAGE%%">
                             <h1 id="data_name">%%DATA_NAME%%</h1>
                             <table>
                                 <thead>
@@ -60,7 +44,7 @@
                                         <th>County Name</th>
                                         <th>State</th>
                                         <th>Year</th>
-                                        <th>Temperature (Farreheit)</th>
+                                        <th>Temperature (Fahrenheit)</th>
                                         <th>Temperature (Celsius)</th>
                                     </tr>
                                 </thead>

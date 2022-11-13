@@ -5,9 +5,6 @@ let path = require('path');
 // NPM modules
 let express = require('express');
 let sqlite3 = require('sqlite3');
-const Chart = require('chart.js');
-
-
 
 let public_dir = path.join(__dirname, 'public');
 let template_dir = path.join(__dirname, 'templates');
@@ -36,73 +33,42 @@ app.get('/', (req, res) => {
     res.redirect(home);
 });
 
-app.get('/national/', (req, res) => {
-    fs.readFile(path.join(template_dir, 'national_template.html'), (err, template) => {
-        let query = 'SELECT national.year, national.temp, national.tempc FROM national';
-        if (err) {
-            res.status(404).type('html').send('Error: Page not found');
-        }
-        else {
-            db.all(query, [], (err, rows) => {
-                if (err) {
-                    res.status(404).type('html').send('Error: entry not found in database');
-                }
-                else {
-                    let response = template.toString();
-                    response = response.replace('%%DATA_NAME%%', 'National Temperature');
-                    //response = response.replace('%%NATIONAL_ALT_TEXT%%', 'photo of the United States');
-                    //response = response.replace('%%NATIONAL_IMAGE%%', '/photos/county.png');
-                    let years = [];
-                    let data = [];
-                    let i;
-                    for (i = 0; i < rows.length; i++) {
-                        years.push(parseInt(rows[i].year));
-                        data.push(rows[i].temp)
-                    }
-                    console.log(years);
-                    console.log(data);
-                    response = response.replace('%%YEARS%%', years);
-                    response = response.replace('%%DATA_PLACEHOLDER_F%%', data);
-                    res.status(200).type('html').send(response);
-                };
-            });
-        };
-    });
-});
-
-
 //NATIONAL APPLICATIONS
 app.get('/national/year/:year', (req, res) => {
     let year = parseInt(req.params.year);
     fs.readFile(path.join(template_dir, 'national_template.html'), (err, template) => {
         let query = 'SELECT national.year, national.temp, national.tempc FROM national WHERE national.year = ?';
         if (err) {
-            res.status(404).type('html').send('Error: Page not found');
+            res.status(404).type('html').send('Error 404: Page not found');
         }
         else {
             db.all(query, [year], (err, rows) => {
+                let response = template.toString();
+                response = response.replace('%%DATA_NAME%%', 'National Temperature');
+                response = response.replace('%%NATIONAL_ALT_TEXT%%', 'photo of the United States');
+                response = response.replace('%%NATIONAL_IMAGE%%', '/photos/UNITED STATES.jpg');
+                let national_data = '';
+                let years = [];
+                let data = [];
+                let i;
+                for (i = 0; i < rows.length; i++) {
+                    national_data = national_data + '<tr>';
+                    national_data = national_data + '<td>' + rows[i].year + '</td>';
+                    national_data = national_data + '<td>' + rows[i].temp + '</td>';
+                    national_data = national_data + '<td>' + rows[i].tempc + '</td>';
+                    national_data = national_data + '</tr>';
+                    years.push(rows[i].year);
+                    data.push(rows[i].temp);
+                }
                 if (err) {
-                    res.status(404).type('html').send('Error: entry not found in database');
+                    throw (err);
                 }
                 else {
-                    let response = template.toString();
-                    response = response.replace('%%DATA_NAME%%', 'National Temperature');
-                    //response = response.replace('%%NATIONAL_ALT_TEXT%%', 'photo of the United States');
-                    //response = response.replace('%%NATIONAL_IMAGE%%', '/photos/county.png');
-                    let national_data = '';
-                    let years = [];
-                    let i;
-                    for (i = 0; i < rows.length; i++) {
-                        national_data = national_data + '<tr>';
-                        national_data = national_data + '<td>' + rows[i].year + '</td>';
-                        national_data = national_data + '<td>' + rows[i].temp + '</td>';
-                        national_data = national_data + '<td>' + rows[i].tempc + '</td>';
-                        national_data = national_data + '</tr>';
-                        years.push(rows[i].year);
-                    }
                     console.log(years);
+                    console.log(data);
                     response = response.replace('%%TABLE_INFO%%', national_data);
-                    response = response.replace('%%YEARS%%', years);
+                    response = response.replace('%%X_AXIS%%', years);
+                    response = response.replace('%%Y_AXIS%%', data);
                     res.status(200).type('html').send(response);
                 };
             });
@@ -115,7 +81,7 @@ app.get('/national/temperature/:temp', (req, res) => {
     fs.readFile(path.join(template_dir, 'national_template.html'), (err, template) => {
         let query = 'SELECT national.year, national.temp, national.tempc FROM national WHERE national.temp > ?';
         if (err) {
-            res.status(404).type('html').send('Error: Page not found');
+            res.status(404).type('html').send('Error 404: Page not found');
         }
         else {
             db.all(query, [temp], (err, rows) => {
@@ -125,9 +91,11 @@ app.get('/national/temperature/:temp', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', 'National Temperature');
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%NATIONAL_ALT_TEXT%%', 'photo of the United States');
+                    response = response.replace('%%NATIONAL_IMAGE%%', '/photos/UNITED STATES.jpg');
                     let national_data = '';
+                    let years = [];
+                    let data = [];
                     let i;
                     for (i = 0; i < rows.length; i++) {
                         national_data = national_data + '<tr>';
@@ -135,9 +103,20 @@ app.get('/national/temperature/:temp', (req, res) => {
                         national_data = national_data + '<td>' + rows[i].temp + '</td>';
                         national_data = national_data + '<td>' + rows[i].tempc + '</td>';
                         national_data = national_data + '</tr>';
+                        years.push(rows[i].year);
+                        data.push(rows[i].temp);
                     }
-                    response = response.replace('%%TABLE_INFO%%', national_data);
-                    res.status(200).type('html').send(response);
+                    if (err) {
+                        throw (err);
+                    }
+                    else {
+                        console.log(years);
+                        console.log(data);
+                        response = response.replace('%%TABLE_INFO%%', national_data);
+                        response = response.replace('%%X_AXIS%%', years);
+                        response = response.replace('%%Y_AXIS%%', data);
+                        res.status(200).type('html').send(response);
+                    };
                 };
             });
         };
@@ -161,14 +140,13 @@ app.get('/state/year/:year', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', 'State Temperature');
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%STATE_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%STATE_IMAGE%%', '/photos/' + rows[0].state + '.png');
                     let state_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
                         state_data = state_data + '<tr>';
                         state_data = state_data + '<td>' + rows[i].fips + '</td>';
-                        state_data = state_data + '<td>' + rows[i].name + '</td>';
                         state_data = state_data + '<td>' + rows[i].state + '</td>';
                         state_data = state_data + '<td>' + rows[i].year + '</td>';
                         state_data = state_data + '<td>' + rows[i].temp + '</td>';
@@ -198,8 +176,8 @@ app.get('/state/:state', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', rows[0].state);
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%STATE_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%STATE_IMAGE%%', '/photos/' + rows[0].state + '.png');
                     let state_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
@@ -234,8 +212,8 @@ app.get('/state/code/:fips', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', rows[0].state);
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%STATE_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%STATE_IMAGE%%', '/photos/' + rows[0].state + '.png');
                     let state_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
@@ -270,8 +248,8 @@ app.get('/state/temperature/:temp', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', 'States where the year average temperature was above ' + temp + ' degrees.');
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%STATE_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%STATE_IMAGE%%', '/photos/' + rows[0].state + '.png');
                     let state_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
@@ -306,8 +284,8 @@ app.get('/county/temperature/:temp', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', 'US Counties where the year average temperature was above ' + temp + ' degrees.');
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%COUNTY_IMAGE%%', '/photos/UNITED STATES.jpg');
                     let county_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
@@ -343,8 +321,8 @@ app.get('/county/code/:fips', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%','Placeholder');
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%COUNTY_IMAGE%%', '/photos/UNITED STATES.jpg');
                     let county_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
@@ -380,8 +358,8 @@ app.get('/county/:county', (req, res) => {
                 else {
                     let response = template.toString();
                     response = response.replace('%%DATA_NAME%%', rows[0].county);
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%COUNTY_IMAGE%%', '/photos/UNITED STATES.jpg');
                     let county_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {
@@ -404,7 +382,7 @@ app.get('/county/:county', (req, res) => {
 
 app.get('/county/year/:year', (req, res) => {
     let year = parseInt(req.params.year);
-    fs.readFile(path.join(template_dir, 'state_template.html'), (err, template) => {
+    fs.readFile(path.join(template_dir, 'county_template.html'), (err, template) => {
         let query = 'SELECT county.fips, county.year, county.temp, county.tempc, fips.name, fips.state FROM county INNER JOIN fips ON county.fips = fips.fips WHERE county.year = ?';
         if (err) {
             res.status(404).type('html').send('Error: Page not found');
@@ -416,9 +394,9 @@ app.get('/county/year/:year', (req, res) => {
                 }
                 else {
                     let response = template.toString();
-                    response = response.replace('%%DATA_NAME%%', 'County Temperature by Year');
-                    //response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
-                    //response = response.replace('%%COUNTY_IMAGE%%', '/photos/county.png');
+                    response = response.replace('%%DATA_NAME%%', 'County Temperature');
+                    response = response.replace('%%COUNTY_ALT_TEXT%%', 'photo of US counties');
+                    response = response.replace('%%COUNTY_IMAGE%%', '/photos/UNITED STATES.jpg');
                     let county_data = '';
                     let i;
                     for (i = 0; i < rows.length; i++) {

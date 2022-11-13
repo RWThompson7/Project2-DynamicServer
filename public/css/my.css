@@ -71,8 +71,6 @@ li {
 .grid-container {
     background-size: cover;
     background-color: whitesmoke;
-    border-style: groove;
-    border-color: #232323;
 }
 .center {
     display: block;
@@ -80,8 +78,8 @@ li {
     margin-right: auto;
     width: 50%;
   }
-  img {
-border-style: groove;
+table, th, td {
+    border-style:groove;
     border-color: #232323;
   }
 /* For the photo row on the fun page */
@@ -104,12 +102,10 @@ border-style: groove;
     background-color: #232323;
 }
 .button:hover, .button:focus {
-    background-color: #b5a642;
+    background-color: rgb(26, 84, 113);
 }
 .off-canvas {
     background-color: #232323;
-    border-style: groove;
-    border-color: #232323;
 }
 .off-canvas-content {
     background-size: cover;
@@ -117,8 +113,6 @@ border-style: groove;
 .top-bar {
     background-size: cover;
     height: 110%;
-    border-style: groove;
-    border-color: #232323;
 }
 /* HERO */
 /* Makes the image scale with the superimposed text */
